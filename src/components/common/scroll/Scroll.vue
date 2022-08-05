@@ -13,10 +13,8 @@
 
     },
     name: "scroll",
-    data(){
 
-    },
-    methods(){
+    methods:{
 
     },
     mounted(){
