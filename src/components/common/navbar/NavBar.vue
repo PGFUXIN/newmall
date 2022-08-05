@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="navBar">
     <div class="left"><slot name="left"></slot></div>
     <div class="center"><slot name="center"></slot></div>
     <div class="right"><slot name="right"></slot></div>
@@ -13,18 +13,20 @@
 </script>
 
 <style scoped>
-  .flex{
+  .navBar{
     display: flex;
     background:var(--color-tint);
-    box-shadow:var(--color-background) 5px 5px 30px 10px
+    box-shadow:var(--color-background) 5px 5px 30px 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 9;
   }
   .left,.right{
-    flex:1;
     width: 60px;
     height: 44px;
   }
   .center{
-    flex: 3;
+    flex: 1;
     height: 44px;
     padding: 13px 0px;
     color: white;

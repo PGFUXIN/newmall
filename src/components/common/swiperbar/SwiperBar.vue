@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="padding-top:44px">
     <!--{{banner}}-->
-      <div class="swiper-bar" v-if="banner !==null">
+      <div class="swiperBar" v-if="banner !==null">
           <img :src="banner[currentIndex].image" >
       </div>
       <div class="selects">
@@ -61,11 +61,8 @@
 </script>
 
 <style scoped>
-  .swiper-bar{
-    display:flex;
-  }
-  img{
-    width: -webkit-fill-available
+  .swiperBar img{
+    width: 100%
   }
   img::-webkit-scrollbar{
     width: 0;
