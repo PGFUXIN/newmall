@@ -10,7 +10,7 @@
       <tab-control class="home-tab-control" :titles="tabControlTitles" @tabClick="tabClick"></tab-control>
       <goods-view :goods="goods[goodsType]"></goods-view>
     </scroll>
-
+    <back-top @backTop.native="backTop"></back-top>
     <!--<high-swiper-bar></high-swiper-bar>-->
   </div>
 
@@ -25,7 +25,7 @@
   import TabControl from "../../components/content/controlTab/TabControl"
   import GoodsView from "../../components/content/goods/GoodsView"
   import Scroll from "../../components/common/scroll/Scroll"
-
+  import BackTop from "../../components/content/backTop/BackTop"
 
 
   import {
@@ -47,7 +47,8 @@
       SwiperBar,
       FeatureView,
       TabControl,
-      GoodsView
+      GoodsView,
+      BackTop
     },
     data(){
       return {
@@ -88,7 +89,9 @@
           throw "系统开小差了!!!"
         }
       },
-
+      backTop(){
+        // this.Scroll.
+      },
 
       /**
        * 网络接口相关

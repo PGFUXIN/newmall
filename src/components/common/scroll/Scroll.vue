@@ -15,10 +15,12 @@
     name: "scroll",
 
     methods:{
-
+      fetchData(){
+        console.log('fetchData');
+      }
     },
     mounted(){
-
+      bScroll(this.$refs.wrapper)
 
     }
   }
@@ -26,6 +28,7 @@
 
 <style scoped>
 .wrapper{
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>
