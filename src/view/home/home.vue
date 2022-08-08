@@ -3,14 +3,14 @@
     <nav-bar>
       <P slot="center" style="text-align: center">购物街</P>
     </nav-bar>
-    <scroll>
+    <scroll ref="scroll">
       <swiper-bar :banner="banner"></swiper-bar>
       <recommend :recommends="recommend"></recommend>
       <feature-view></feature-view>
       <tab-control class="home-tab-control" :titles="tabControlTitles" @tabClick="tabClick"></tab-control>
       <goods-view :goods="goods[goodsType]"></goods-view>
     </scroll>
-    <back-top @backTop.native="backTop"></back-top>
+    <back-top @click.native="backTop"></back-top>
     <!--<high-swiper-bar></high-swiper-bar>-->
   </div>
 
@@ -91,6 +91,9 @@
       },
       backTop(){
         // this.Scroll.
+        console.log("this.components.Scroll=",this.$refs.scroll.scrollTo);
+
+        this.$refs.scroll.scrollTo(0,0,1000)
       },
 
       /**
