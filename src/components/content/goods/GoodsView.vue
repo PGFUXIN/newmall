@@ -38,10 +38,10 @@
 <style scoped>
   .goods-view{
     /*column-count:2;*/
-    postion:relative;
+    position:relative;
     display: flex;
     flex-wrap: wrap;
     padding: 5px;
-    margin-bottom: 49px;
+    bottom: 49px;
   }
 </style>

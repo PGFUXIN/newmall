@@ -23,9 +23,6 @@
       }
     },
     methods:{
-      fetchData(){
-        console.log('fetchData');
-      },
       scrollTo(x,y,time=500){
        this.BS.scrollTo(x,y,time)
       }
@@ -42,8 +39,8 @@
         click:true,
         //pullUpLoad:true,
         pullUpLoad:{
-          // 当上拉距离超过10px时触发 pullingUp 事件
-          threshold: -10
+          // 当上拉距离超过20px时触发 pullingUp 事件
+          threshold: -20
         },
         mouseWheel: true,
         pullDownRefresh:{
