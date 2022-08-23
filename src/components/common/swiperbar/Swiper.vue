@@ -7,7 +7,6 @@
     </div>
     <div style="text-align: center;width: 100px;display: flex;margin: -35px auto;font-size: 30px">
       <div v-for="(item,index) in imgList" style="flex: 1;z-index: 10;" :class="{checked:index===currentIndex,unchecked:index!=currentIndex}" @click="checkImg(index)">-</div>
-
     </div>
   </div>
 </template>
@@ -68,9 +67,6 @@
       //设置时钟定时轮播广告
       runInterval(){
         if(this.timerNum<=0){
-          console.log("5555")
-          console.log(this.timer)
-          console.log("66666")
           this.timer = setInterval(() => {
             this.nextIndex()
             this.getImgDataList(this.currentIndex)
@@ -140,23 +136,14 @@
       })
       bs.on('scrollStart',position=>{
         //启动轮播时钟
-        console.log('touchStart');
-        console.log("33333");
-        console.log(this.timer);
-        console.log("44444");
         this.clearInterval()//清除轮播时钟
       }),
       bs.on('touchEnd',position=>{
         //启动轮播时钟
-        console.log('touchEnd')
         this.runInterval()
       }),
       bs.on('scrollEnd',position=>{
-        console.log('scrollEnd')
         bs.scrollTo(this.startX,0,500)
-        console.log("1111");
-        console.log(this.timer);
-        console.log("2222");
       })
     }
   }
