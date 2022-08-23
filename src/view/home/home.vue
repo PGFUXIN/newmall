@@ -3,14 +3,15 @@
     <nav-bar>
       <P slot="center" style="text-align: center">购物街</P>
     </nav-bar>
-    <scroll ref="scroll">
-      <swiper-bar :banner="banner"></swiper-bar>
+    <scroll ref="scroll" :probe-type="probeType" @scroll="scrollContent" @pullingUp="fetchData">
+      <!--增加v-if = banner以保证接口数据加载完成再渲染页面-->
+      <swiper v-if="banner" :banner="banner"></swiper>
       <recommend :recommends="recommend"></recommend>
       <feature-view></feature-view>
       <tab-control class="home-tab-control" :titles="tabControlTitles" @tabClick="tabClick"></tab-control>
       <goods-view :goods="goods[goodsType]"></goods-view>
     </scroll>
-    <back-top @click.native="backTop"></back-top>
+    <back-top @click.native="backTop" v-show="showBacktop"></back-top>
     <!--<high-swiper-bar></high-swiper-bar>-->
   </div>
 
@@ -26,15 +27,14 @@
   import GoodsView from "../../components/content/goods/GoodsView"
   import Scroll from "../../components/common/scroll/Scroll"
   import BackTop from "../../components/content/backTop/BackTop"
-
+  import HighSwiperBar from "../../components/common/swiperbar/HighSwiperBar"
+  import Swiper from "../../components/common/swiperbar/Swiper"
 
   import {
     getHomeMultiData,
     getHomeGoods
   } from '../../network/home.js'
 
-
-  // import HighSwiperBar from "../../components/common/swiperbar/HighSwiperBar"
   export default {
     name: "home",
     components:{
@@ -42,13 +42,14 @@
       TabControl,
       FeatureView,
       Recommend,
-      // HighSwiperBar,
+      HighSwiperBar,
       NavBar,
       SwiperBar,
       FeatureView,
       TabControl,
       GoodsView,
-      BackTop
+      BackTop,
+      Swiper
     },
     data(){
       return {
@@ -60,19 +61,21 @@
           pop:{pageNum:0,list:[],type:'pop'},
           new:{pageNum:0,list:[],type:'new'},
           sell:{pageNum:0,list:[],type:'sell'}
-        }
+        },
+        probeType:3,
+        showBacktop:false,
       }
     },
     created(){
-      //获取轮播图数据
+      // 获取轮播图数据
       this.getHomeMultiData()
       //获取商品数据
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
     },
-    mounted(){
-
+    updated(){
+      this.$refs.scroll.BS.refresh()
     },
     methods:{
       /**
@@ -92,10 +95,11 @@
       backTop(){
         // this.Scroll.
         console.log("this.components.Scroll=",this.$refs.scroll.scrollTo);
-
         this.$refs.scroll.scrollTo(0,0,1000)
       },
-
+      scrollContent(position){
+        this.showBacktop =  Math.abs(position.y)>1000
+      },
       /**
        * 网络接口相关
        * */
@@ -107,20 +111,19 @@
           console.log(err);
         })
       },
-
       fetchData(){
         const type = this.goodsType
-        this.getHomeGoods(type)
+        return this.getHomeGoods(type)
       },
 
       getHomeGoods(type){
         let page = this.goods[type].pageNum + 1
-        getHomeGoods({
+        return getHomeGoods({
           type,
           page
         }).then(
           res=>{
-            console.log("res================",res.data.list);
+            // console.log("res================",res.data.list);
             this.goods[type].list.push(...res.data.list)
             this.goods[type].pageNum = pageNum
           }

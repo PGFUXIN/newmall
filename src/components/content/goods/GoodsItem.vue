@@ -38,7 +38,7 @@
     text-overflow:ellipsis;
     display:-webkit-box;
     -webkit-box-orient:vertical;
-    -webkit-line-clamp:1;
+    -webkit-line-clamp:1;/*限制几行显示*/
   }
 
   .goods-item-fav::before {

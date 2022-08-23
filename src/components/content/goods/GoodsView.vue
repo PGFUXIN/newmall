@@ -24,11 +24,12 @@
         pop:'pop'
       }
     },
+    // mounted(){
+    //   console.log("this.parent=======================",this.$parent.$parent.$refs.scroll.BS.refresh());
+    // },
     methods:{
       getKey(index){
-        console.log("this.goods.type================",this.goods.type);
         const key = this.goods.type+index;
-        console.log("key=======",key);
         return this.goods.type+index
       }
     }

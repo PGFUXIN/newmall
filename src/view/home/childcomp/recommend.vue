@@ -26,7 +26,7 @@
 <style scoped>
   .recommend{
     display:flex;
-    margin-top: 10px;
+    margin-top: 40px;
     text-align: center;
     padding: 10px 0 20px;
     border-bottom: 8px solid var(--color-tint);
