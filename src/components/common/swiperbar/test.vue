@@ -147,5 +147,8 @@
         }
       }
     }
+    .content{
+      height: 195px;
+    }
   }
 </style>

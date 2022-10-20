@@ -42,7 +42,8 @@
     position:relative;
     display: flex;
     flex-wrap: wrap;
-    padding: 5px;
-    bottom: 49px;
+    padding: 44px 5px 5px 5px;
+    bottom: 90px;
+    margin-top: 40px;
   }
 </style>

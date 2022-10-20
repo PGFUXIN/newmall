@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img">
+    <img :src="goodsItem.show.img" @load="imgLoadOver">
     <p>{{goodsItem.title}}</p>
     <span class="price">{{goodsItem.price}}</span>
     <span class="good-item-fav"></span>
@@ -17,6 +17,12 @@
         default(){
           return null
         }
+      }
+    },
+    methods:{
+      imgLoadOver(){
+        // console.log('isOver');
+        this.$bus.$emit('loadOver')
       }
     }
   }

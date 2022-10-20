@@ -28,8 +28,11 @@
       }
     },
     methods:{
-      scrollTo(x,y,time=500){
-       this.BS.scrollTo(x,y,time)
+      scrollTo(x,y,time){
+       this.BS&&this.BS.scrollTo(x,y,time)
+      },
+      refresh(){
+        this.BS&&this.BS.refresh()
       }
     },
     mounted(){

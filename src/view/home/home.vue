@@ -1,15 +1,16 @@
 <template>
   <div>
-    <nav-bar>
+    <nav-bar ref="navBar">
       <P slot="center" style="text-align: center">购物街</P>
     </nav-bar>
+    <tab-control style="position: fixed;top: 44px;" :titles="tabControlTitles" @tabClick="tabClick" ref="tabControlX" v-show="showTabControl"></tab-control>
     <scroll ref="scroll" :probe-type="probeType" @scroll="scrollContent" @pullingUp="fetchData">
       <!--增加v-if = banner以保证接口数据加载完成再渲染页面-->
       <swiper v-if="banner" :banner="banner"></swiper>
       <recommend :recommends="recommend"></recommend>
       <feature-view></feature-view>
-      <tab-control class="home-tab-control" :titles="tabControlTitles" @tabClick="tabClick"></tab-control>
-      <goods-view :goods="goods[goodsType]"></goods-view>
+      <tab-control :titles="tabControlTitles" @tabClick="tabClick" ref="tabControl"></tab-control>
+      <goods-view :goods="goods[goodsType]" ref="goodsView"></goods-view>
     </scroll>
     <back-top @click.native="backTop" v-show="showBacktop"></back-top>
     <!--<high-swiper-bar></high-swiper-bar>-->
@@ -46,7 +47,6 @@
       NavBar,
       SwiperBar,
       FeatureView,
-      TabControl,
       GoodsView,
       BackTop,
       Swiper
@@ -64,6 +64,9 @@
         },
         probeType:3,
         showBacktop:false,
+        showTabControl:false,
+        timer:null,
+        homeX:0
       }
     },
     created(){
@@ -73,11 +76,53 @@
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
+      //监听图片加载完成后重新刷新scroll的高度
+      this.$bus.$on("loadOver",()=>{
+        this.debounce(this.refresh,200)
+      })
+
     },
+
+    mounted(){
+
+    },
+
     updated(){
-      this.$refs.scroll.BS.refresh()
+
+    },
+    //路由回来时回到原点
+    activated(){
+      this.$refs.scroll.scrollTo(0,this.homeX,0)
+    },
+    destroy(){
+
+    },
+    //路由离开时记住当前页面的位置
+    deactivated(){
+      this.homeX = this.$refs.scroll.BS.y
     },
     methods:{
+      refresh(){
+        // console.log("this.$refs.scroll.BS=",this.$refs.scroll.BS.refresh);
+        if(this.$refs.scroll){
+          console.log('xxxxx');
+          this.$refs.scroll.refresh()
+        }else{
+          console.log('refresh');
+          this.refresh()
+        }
+        // this.$refs.scroll&&this.$refs.scroll.refresh()
+      },
+      /**防抖函数*/
+       debounce(func,delay){
+        if(this.timer){
+          clearTimeout(this.timer)
+        }{
+          this.timer = setTimeout(()=>{
+            func.apply()
+          },delay)
+        }
+      },
       /**
        * 事件相关
        * */
@@ -91,14 +136,25 @@
         }else{
           throw "系统开小差了!!!"
         }
+        //设置两个tabControl的选中项一致
+        if(this.$refs.tabControlX){
+          this.$refs.tabControlX.currentIndex = index;
+        }
+        if(this.$refs.tabControl){
+          this.$refs.tabControl.currentIndex = index;
+        }
       },
       backTop(){
-        // this.Scroll.
-        console.log("this.components.Scroll=",this.$refs.scroll.scrollTo);
+        // this.Scroll
         this.$refs.scroll.scrollTo(0,0,1000)
       },
       scrollContent(position){
+        //控制backtop显示隐藏
         this.showBacktop =  Math.abs(position.y)>1000
+        //控制tabControl吸顶
+        let move = this.$refs.tabControl.$el.offsetTop-44
+
+        this.showTabControl = Math.abs(position.y) > move
       },
       /**
        * 网络接口相关
@@ -137,9 +193,5 @@
 </script>
 
 <style scoped>
-  .home-tab-control{
-    position: sticky;
-    top:44px;
-    background: white;
-  }
+
 </style>

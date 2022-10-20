@@ -15,6 +15,7 @@ const routes=[{
     name:'home',
     path:'/Home',
     component:Home
+    // meta:{isKeepAlive:true}
   },
   {
     name:'categroy',

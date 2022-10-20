@@ -19,13 +19,14 @@
     },
     data(){
       return {
-        currentIndex :0,
+        currentIndex :this.$store.state.goodType,
       }
     },
     methods:{
       itemClick(index){
         this.currentIndex = index;
         this.$emit("tabClick",index)
+        this.$store.commit('setGoodType',index)
       }
     }
   }
@@ -40,10 +41,11 @@
     font-size: 15px;
     position: relative;
     z-index: 9;
+    background-color: white;
+    width: 100%;
   }
   .tab-control-item{
     flex:1;
-
   }
   .active{
     border-bottom: 3px solid var(--color-high-text);

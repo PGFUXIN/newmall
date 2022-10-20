@@ -79,7 +79,6 @@
         this.timerNum = this.timerNum - 1
       },
       nextIndex(){
-        console.log(new Date());
         if(this.currentIndex == this.imgList.length - 1) {
           this.currentIndex = 0;
         }else{
@@ -131,6 +130,7 @@
           }
           this.getImgDataList(this.currentIndex);
           bs.scrollTo(this.startX,0,0)
+
           bs.refresh()
         }
       })
@@ -144,6 +144,7 @@
       }),
       bs.on('scrollEnd',position=>{
         bs.scrollTo(this.startX,0,500)
+
       })
     }
   }
@@ -158,5 +159,8 @@
   }
   .unchecked{
     color:white;
+  }
+  .content{
+    height: 195px;
   }
 </style>
